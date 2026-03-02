@@ -3,7 +3,7 @@
 import { app } from "/scripts/app.js";
 import { api } from "/scripts/api.js";
 
-console.log("[NeonHighlight v34] модуль загружен");
+console.log("[NeonHighlight v34] loaded");
 
 const DEBUG = false;
 function dlog(...args) {
@@ -632,10 +632,10 @@ function createErrorPanel(callbacks) {
         panel.id = "boss-neon-error-panel";
         panel.innerHTML = `
           <div class="bn-header">
-            <span class="bn-title">⚠ ОШИБКИ НОД</span>
+            <span class="bn-title">⚠ Nodes error</span>
             <div class="bn-header-buttons">
-              <button class="bn-btn bn-btn-clear" title="Очистить все">✕ Все</button>
-              <button class="bn-btn bn-btn-close" title="Скрыть панель">×</button>
+              <button class="bn-btn bn-btn-clear" title="Clear">✕ All</button>
+              <button class="bn-btn bn-btn-close" title="Hide">×</button>
             </div>
           </div>
           <div class="bn-body">
@@ -668,32 +668,32 @@ function createStatsPanel() {
         panel.id = "boss-neon-stats-panel";
         panel.innerHTML = `
           <div class="bn-header">
-            <span class="bn-title">📊 СТАТИСТИКА</span>
-            <button class="bn-btn-collapse" title="Свернуть/развернуть">−</button>
+            <span class="bn-title">📊 INFO</span>
+            <button class="bn-btn-collapse" title="Collapse/Show">−</button>
           </div>
           <div class="bn-body">
             <div class="bn-stat-row">
-              <span class="bn-stat-label">🎯 Запусков:</span>
+              <span class="bn-stat-label">🎯 Start:</span>
               <span class="bn-stat-value" id="bn-stat-total">0</span>
             </div>
             <div class="bn-stat-row">
-              <span class="bn-stat-label">✅ Успешно:</span>
+              <span class="bn-stat-label">✅ Success:</span>
               <span class="bn-stat-value success" id="bn-stat-success">0</span>
             </div>
             <div class="bn-stat-row">
-              <span class="bn-stat-label">❌ Ошибок:</span>
+              <span class="bn-stat-label">❌ Error:</span>
               <span class="bn-stat-value error" id="bn-stat-errors">0</span>
             </div>
             <div class="bn-stat-row">
-              <span class="bn-stat-label">⏱ Общее время:</span>
+              <span class="bn-stat-label">⏱ Total:</span>
               <span class="bn-stat-value" id="bn-stat-time">0s</span>
             </div>
             <div class="bn-stat-row">
-              <span class="bn-stat-label">📈 Среднее:</span>
+              <span class="bn-stat-label">📈 Average:</span>
               <span class="bn-stat-value" id="bn-stat-avg">0s</span>
             </div>
             <div class="bn-current-status idle" id="bn-stat-status">
-              ОЖИДАНИЕ
+              I'M READY
             </div>
           </div>
         `;
@@ -723,37 +723,37 @@ function createSettingsPanel() {
         panel.id = "boss-neon-settings-panel";
         panel.innerHTML = `
           <div class="bn-header">
-            <span class="bn-title">⚙ НАСТРОЙКИ</span>
-            <button class="bn-btn-collapse" title="Свернуть/развернуть">−</button>
+            <span class="bn-title">⚙ PARAMS</span>
+            <button class="bn-btn-collapse" title="Collapse/Show">−</button>
           </div>
           <div class="bn-body">
             <div class="bn-setting-row">
-              <span class="bn-setting-label">🔊 Звуки</span>
+              <span class="bn-setting-label">🔊 Sounds</span>
               <div class="bn-setting-controls">
                 <div class="bn-toggle ${settings.soundEnabled ? 'active' : ''}" data-setting="soundEnabled"></div>
               </div>
             </div>
             <div class="bn-setting-row">
-              <span class="bn-setting-label">🔉 Громкость</span>
+              <span class="bn-setting-label">🔉 Volume</span>
               <div class="bn-setting-controls">
                 <input type="range" class="bn-slider" min="0" max="100" value="${Math.round(settings.soundVolume * 100)}" data-setting="soundVolume">
                 <button class="bn-test-btn" data-action="testSound">▶</button>
               </div>
             </div>
             <div class="bn-setting-row">
-              <span class="bn-setting-label">📊 Прогресс-бар</span>
+              <span class="bn-setting-label">📊 Progress</span>
               <div class="bn-setting-controls">
                 <div class="bn-toggle ${settings.progressBarEnabled ? 'active' : ''}" data-setting="progressBarEnabled"></div>
               </div>
             </div>
             <div class="bn-setting-row">
-              <span class="bn-setting-label">📈 Статистика</span>
+              <span class="bn-setting-label">📈 Info</span>
               <div class="bn-setting-controls">
                 <div class="bn-toggle ${settings.statsEnabled ? 'active' : ''}" data-setting="statsEnabled"></div>
               </div>
             </div>
             <div class="bn-setting-row">
-              <span class="bn-setting-label">🎨 Неоновый UI</span>
+              <span class="bn-setting-label">🎨 Neon ComfyUI</span>
               <div class="bn-setting-controls">
                 <div class="bn-toggle ${settings.neonUIEnabled ? 'active' : ''}" data-setting="neonUIEnabled"></div>
               </div>
@@ -1170,16 +1170,16 @@ function textFromPromptNodeError(entry) {
 
 function classifyPromptNodeError(entry) {
     const t = textFromPromptNodeError(entry);
-    if (!t) return "загрузи модель!";
+    if (!t) return "pls, load model!";
 
     if (
         t.includes("required input is missing") ||
         t.includes("missing input")
     ) {
-        return "нет связи";
+        return "link error";
     }
 
-    return "загрузи модель!";
+    return "pls, load model!";
 }
 
 function getRuntimeErrorText(d) {
@@ -1208,13 +1208,13 @@ function getRuntimeErrorText(d) {
 
 function classifyRuntimeError(d) {
     const t = getRuntimeErrorText(d);
-    if (!t) return "загрузи модель!";
+    if (!t) return "pls, load model!";
 
     if (t.includes("missing input") || t.includes("required input")) {
-        return "нет связи";
+        return "link error";
     }
 
-    return "загрузи модель!";
+    return "pls, load model!";
 }
 
 function findNodeIdDeep(obj, depth = 0) {
@@ -1298,13 +1298,13 @@ app.registerExtension({
     name: "boss.NeonHighlight",
 
     async setup() {
-        console.log("[NeonHighlight v34] setup() старт");
+        console.log("[NeonHighlight v34] setup() run");
 
         injectNeonTheme();
 
         const canvas = app.canvas;
         if (!canvas) {
-            console.warn("[NeonHighlight v34] canvas не найден");
+            console.warn("[NeonHighlight v34] canvas not found");
             return;
         }
 
@@ -1368,7 +1368,7 @@ app.registerExtension({
             for (const [id, info] of state.errorNodes.entries()) {
                 const node = g?.getNodeById(id);
                 const title = node?.title || node?.comfyClass || `Node ${id}`;
-                const label = info.label || "загрузи модель!";
+                const label = info.label || "pls, load model!";
 
                 const row = document.createElement("div");
                 row.className = "bn-item";
@@ -1377,7 +1377,7 @@ app.registerExtension({
                     `<span class="bn-id">#${id}</span>` +
                     `<span class="bn-title-text">${title}</span>` +
                     `<span class="bn-label">${label}</span>` +
-                    `<span class="bn-item-close" title="Убрать">×</span>`;
+                    `<span class="bn-item-close" title="Remove">×</span>`;
 
                 panelList.appendChild(row);
             }
@@ -1404,13 +1404,13 @@ app.registerExtension({
             if (statusEl) {
                 if (stats.isRunning) {
                     statusEl.className = "bn-current-status running";
-                    statusEl.textContent = "⚡ ГЕНЕРАЦИЯ...";
+                    statusEl.textContent = "⚡ PROCESS...";
                 } else if (state.errorNodes.size > 0) {
                     statusEl.className = "bn-current-status error";
-                    statusEl.textContent = "❌ ЕСТЬ ОШИБКИ";
+                    statusEl.textContent = "❌ ERROR FOUND";
                 } else {
                     statusEl.className = "bn-current-status idle";
-                    statusEl.textContent = "💤 ОЖИДАНИЕ";
+                    statusEl.textContent = "💤 WAIT...";
                 }
             }
         }
@@ -1495,7 +1495,7 @@ app.registerExtension({
             state.nodeProgress.delete(id);
             const info = state.errorNodes.get(id) || {};
             if (label) info.label = label;
-            else if (!info.label) info.label = "загрузи модель!";
+            else if (!info.label) info.label = "pls, load model!";
             state.errorNodes.set(id, info);
             updateErrorPanel();
             updateStatsPanel();
@@ -1728,7 +1728,7 @@ app.registerExtension({
                                 const n = findNodeIdDeep(data);
                                 if (n != null) {
                                     ids.push(n);
-                                    labels.set(n, "загрузи модель!");
+                                    labels.set(n, "pls, load model!");
                                 }
                             }
                         }
@@ -1754,6 +1754,6 @@ app.registerExtension({
 
         updateStatsPanel();
 
-        console.log("[NeonHighlight v34] setup() завершён 🎵✨");
+        console.log("[NeonHighlight v34] setup() done 🎵✨");
     },
 });
